@@ -1,9 +1,8 @@
-[[adding-custom-s2i-image-to-the-project-catalog]]
 Adding Custom S2I Image to the Project Catalog
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the last lab to
-link:14-Using-a-Custom-S2I-Image.adoc[Using Custom S2I Image], we used 
+link:14-Using-a-Custom-S2I-Image.adoc[Using Custom S2I Image], we used
 the S2I image directly from a docker registry
 that is outside OpenShift environment. This custom S2I image was not in
 openshift catalog. In this lab, we will learn how to add the Spring Boot image
@@ -114,5 +113,3 @@ colleague to do it ;). You are thinking right. All you need to do is
 tell your openshift cluster administrator. +
 *Answer* The cluster administrator will add the image to the `openshift`
 project and everyone will start seeing it.
-
-link:0_toc.adoc[Table Of Contents]

@@ -1,4 +1,3 @@
-[[changing-code-on-the-fly]]
 Changing code on the fly
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -151,5 +150,3 @@ fly. When ready they can commit the changes to the source control
 repository.
 
 You can repeat a few more changes and enjoy the rsync!!!
-
-link:0_toc.adoc[Table Of Contents]

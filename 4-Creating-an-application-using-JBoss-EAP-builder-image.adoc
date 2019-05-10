@@ -1,4 +1,3 @@
-[[creating-an-application-using-jboss-eap-builder-image]]
 Creating an application using JBoss EAP builder image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,8 +42,8 @@ Context Directory: /
 ....
 
 
-image::images/jboss_wizard_configuration.png[image]
-image::images/jboss_wizard_configuration2.png[image]
+image::jboss_wizard_configuration.png[image]
+image::jboss_wizard_configuration2.png[image]
 
 Click Next
 Select `Create a secret in ... to be used later`
@@ -344,10 +343,8 @@ $ curl ks-hco-mkerker.playground.hotcontainers.nl
 Go to http://ks-hco-mkerker.playground.hotcontainers.nl via your browser.
 Please replace your username with yours.
 
-image::images/ks-myjbossapp.png[image]
+image::ks-myjbossapp.png[image]
 
 Congratulations! In this exercise you have learned how to create, build
 and deploy a JBoss EAP application using OpenShift’s JBoss EAP Builder
 Image.
-
-link:0_toc.adoc[Table Of Contents]

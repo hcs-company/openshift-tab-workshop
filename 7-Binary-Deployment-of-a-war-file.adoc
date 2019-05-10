@@ -1,4 +1,3 @@
-[[binary-deployment-of-a-war-file]]
 Binary Deployment of a war file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -169,5 +168,3 @@ route "myapp" exposed
 ....
 
 You can use the route to access the application using the URL.
-
-link:0_toc.adoc[Table Of Contents]

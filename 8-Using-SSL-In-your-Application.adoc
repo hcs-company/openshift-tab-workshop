@@ -1,4 +1,3 @@
-[[using-ssl-in-your-application]]
 Using SSL in your application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -74,9 +73,9 @@ Edit your routing configuration:
 $ oc edit route/ks
 ....
 
-You are going to add 
+You are going to add
 ```
-tls: 
+tls:
   termination: edge
 ```
 right below the `host:` *spec:* section. It should look something like this.
@@ -134,5 +133,3 @@ Verify by visiting your page by using the `https://ks-hco-UserName.playground.ho
 
 Congratulations!! In this exercise you have learned about service SSL
 from your application
-
-link:0_toc.adoc[Table Of Contents]
