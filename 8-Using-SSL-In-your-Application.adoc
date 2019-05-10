@@ -1,0 +1,138 @@
+[[using-ssl-in-your-application]]
+Using SSL in your application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this exercise you will set up your application to encrypt traffic
+with the OpenShift Wildcard certificate.
+
+*Step 1: View the routing config*
+
+To view the routing config you will need to use the `oc get route`
+command
+
+....
+$ oc get route/ks -o yaml
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    description: Route for application's http service.
+    openshift.io/host.generated: "true"
+  creationTimestamp: 2019-05-09T12:09:48Z
+  labels:
+    application: ks
+    template: eap64-basic-s2i
+    xpaas: 1.4.14
+  name: ks
+  namespace: hco-mkerker
+  ownerReferences:
+  - apiVersion: template.openshift.io/v1
+    blockOwnerDeletion: true
+    kind: TemplateInstance
+    name: b88a6cc8-83bb-4dbb-8bc3-aae1ec606ef3
+    uid: 576fcaaf-7253-11e9-a85d-fa163e51c3a4
+  resourceVersion: "19988011"
+  selfLink: /apis/route.openshift.io/v1/namespaces/hco-mkerker/routes/ks
+  uid: 5780846b-7253-11e9-a610-fa163e484090
+spec:
+  host: ks-hco-mkerker.playground.hotcontainers.nl
+  to:
+    kind: Service
+    name: ks
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2019-05-09T12:09:48Z
+      status: "True"
+      type: Admitted
+    host: ks-hco-mkerker.playground.hotcontainers.nl
+    routerName: router
+    wildcardPolicy: None
+....
+
+Note here that the `host:` is set to the FQDN that your application is
+running on.
+
+Currently the routing component of OpenShift 3 supports ports `80` and
+`443`. When you first create your route, the mapping of `80` to your pod
+is done automatically. There are a few things that need to be done in
+order to get the `443` mapping to work.
+
+*Step 2: TLS Edge Termination*
+
+OpenShift has a _wildcard_ SSL certificate that it can use for any
+application. We can use this SSL certificate to serve SSL from our
+application without having to generate a cert of our own (which is
+sometimes called SSL-offloading).
+
+Edit your routing configuration:
+
+....
+$ oc edit route/ks
+....
+
+You are going to add 
+```
+tls: 
+  termination: edge
+```
+right below the `host:` *spec:* section. It should look something like this.
+
+....
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    description: Route for application's http service.
+    openshift.io/host.generated: "true"
+  creationTimestamp: 2019-05-09T12:09:48Z
+  labels:
+    application: ks
+    template: eap64-basic-s2i
+    xpaas: 1.4.14
+  name: ks
+  namespace: hco-mkerker
+  ownerReferences:
+  - apiVersion: template.openshift.io/v1
+    blockOwnerDeletion: true
+    kind: TemplateInstance
+    name: b88a6cc8-83bb-4dbb-8bc3-aae1ec606ef3
+    uid: 576fcaaf-7253-11e9-a85d-fa163e51c3a4
+  resourceVersion: "19988011"
+  selfLink: /apis/route.openshift.io/v1/namespaces/hco-mkerker/routes/ks
+  uid: 5780846b-7253-11e9-a610-fa163e484090
+spec:
+  host: ks-hco-mkerker.playground.hotcontainers.nl
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: ks
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2019-05-09T12:09:48Z
+      status: "True"
+      type: Admitted
+    host: ks-hco-mkerker.playground.hotcontainers.nl
+    routerName: router
+    wildcardPolicy: None
+....
+
+*Step 3: Verify*
+
+Verify by visiting your page by using the `https://ks-hco-UserName.playground.hotcontainers.nl` URI.
+
+Congratulations!! In this exercise you have learned about service SSL
+from your application
+
+link:0_toc.adoc[Table Of Contents]

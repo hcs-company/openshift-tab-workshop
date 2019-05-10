@@ -1,0 +1,25 @@
+id: "ocptab"
+name: "Technisch Applicatie Beheer Workshop with OpenShift by HCS Company"
+
+modules:
+  activate:
+    - 0-Setting-up-client-tools
+    - 1-Create-App-From-a-Docker-Image
+    - 2-Create-App-Using-Docker-Build
+    - 3-Using-Web-Console
+    - 4-Creating-an-application-using-JBoss-EAP-builder-image
+    - 5-Using-templates
+    - 6-Scale-up-and-Scale-down-the-application-instances
+    - 7-Binary-Deployment-of-a-war-file
+    - 8-Using-SSL-In-your-Application
+    - 9-Blue-Green-Deployments
+    - 10-SCM-Web-Hooks
+    - 11-Rollback-Applications
+    - 12-Code-Promotion-Across-Environments
+    - 13-Using-Persistent-Storage
+    - 14-Using-a-Custom-S2I-Image
+    - 15-Adding-Custom-S2I-Image-to-the-Project-Catalog
+    - 16-Using-ConfigMap-to-Inject-Application-Configuration
+    - 17-Dynamic-Configuration-Updates-using-ConfigMap
+    - 18-Changing-code-on-the-fly
+    - 19-Creating-a-Pipeline

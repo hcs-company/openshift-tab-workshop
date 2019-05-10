@@ -1,0 +1,41 @@
+modules:
+  0-Setting-up-client-tools:
+    name: Setting up client tools
+  1-Create-App-From-a-Docker-Image:
+    name: Creating an application from an existing Docker Image using CLI
+  2-Create-App-Using-Docker-Build:
+    name: Create an application using Docker Build Strategy using CLI
+  3-Using-Web-Console:
+    name: Using Web Console
+  4-Creating-an-application-using-JBoss-EAP-builder-image:
+    name: Creating an application using JBoss EAP builder image
+  5-Using-templates:
+    name: Creating an application with frontend and backend database using templates
+  6-Scale-up-and-Scale-down-the-application-instances:
+    name: Scale Up Scale Down and Idle the application instances
+  7-Binary-Deployment-of-a-war-file:
+    name: Binary deployment of a war file
+  8-Using-SSL-In-your-Application:
+    name: Using SSL In your Application
+  9-Blue-Green-Deployments: 
+    name: Blue-Green Deployments
+  10-SCM-Web-Hooks:
+    name: SCM - Web Hooks
+  11-Rollback-Applications:
+    name: Rollback Applications
+  12-Code-Promotion-Across-Environments:
+    name: Code Promotion Across Environments
+  13-Using-Persistent-Storage:
+    name: Using Persistent Storage
+  14-Using-a-Custom-S2I-Image:
+    name: Using Custom S2I Image to deploy an Application
+  15-Adding-Custom-S2I-Image-to-the-Project-Catalog:
+    name: Adding Custom S2I Image to Project Catalog
+  16-Using-ConfigMap-to-Inject-Application-Configuration:
+    name: Using ConfigMap to add a Database Connection
+  17-Dynamic-Configuration-Updates-using-ConfigMap:
+    name: Dynamic Configuration updates using ConfigMap
+  18-Changing-code-on-the-fly:
+    name: Changing code on the fly
+  19-Creating-a-Pipeline:
+    name: Creating a CI/CD Pipeline

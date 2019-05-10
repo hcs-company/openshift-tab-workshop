@@ -1,0 +1,357 @@
+Create an App using Docker build
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this exercise we will learn how to create an application from a
+Dockerfile. OpenShift takes Dockerfile as an input and generates your
+application docker image for you.
+
+*Step 1: Create a project or use an existing project*
+
+If you want to, you can create a new project based on what you have
+learned in the previous lab. Since we already have a project we will use
+it. Run the following command to make sure. *Remember* to substitute
+UserName with your username.
+
+....
+$ oc project hco-UserName
+....
+
+*Step 2: Create an application that uses docker file*
+
+This time we will use a project that has a Dockerfile in a source code
+repository. We will use a simple project on github
+(https://github.com/hcs-company/time). The `rhel` folder from this github
+project is built starting with rhel7 as the base image which is
+described in Dockerfile. Look at the Dockerfile for this project. It
+starts off with `registry.access.redhat.com/rhel7` image. It copies the
+source code which is a simple `init.sh` file and exposes port `8080`.
+Look at the `init.sh` that just displays the current datetime. There is
+also a PHP version of the same project available in the php folder if
+you like to use that. The php version does exactly the same it has a
+`time.php` file that displays the time.
+
+*Docker Build*: When OpenShift finds a Dockerfile in the source, it uses
+this Dockerfile as the basis to create a docker image for your
+application. This strategy is called `Docker Build` strategy on
+OpenShift. We’ll see more about it when we look at the build
+configuration a couple of steps down the line. Once OpenShift builds the
+application’s docker image, it stores that in a local docker registry.
+Later it uses this image to deploy an application that runs in a pod.
+
+Now let’s create an application using this approach. We will run
+`oc new-app` command by supplying the git uri as the parameter.
+
+....
+$ oc new-app https://github.com/hcs-company/time --context-dir=rhel
+
+--> Found Docker image 5044f60 (3 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/rhel7"
+
+    Red Hat Enterprise Linux 7
+    --------------------------
+    The Red Hat Enterprise Linux Base image is designed to be a fully supported foundation for your containerized applications. This base image provides your operations and application teams with the packages, language runtimes and tools necessary to run, maintain, and troubleshoot all of your applications. This image is maintained by Red Hat and updated regularly. It is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. When used as the source for all of your containers, only one copy will ever be downloaded and cached in your production environment. Use this image just like you would a regular Red Hat Enterprise Linux distribution. Tools like yum, gzip, and bash are provided by default. For further information on how this image was built look at the /root/anacanda-ks.cfg file.
+
+    Tags: base rhel7
+
+    * An image stream tag will be created as "rhel7:latest" that will track the source image
+    * A Docker build using source code from https://github.com/hcs-company/time will be created
+      * The resulting image will be pushed to image stream tag "time:latest"
+      * Every time "rhel7:latest" changes a new build will be triggered
+    * This image will be deployed in deployment config "time"
+    * Port 8080/tcp will be load balanced by service "time"
+      * Other containers can access this service through the hostname "time"
+    * WARNING: Image "registry.access.redhat.com/rhel7" runs as the 'root' user which may not be permitted by your cluster administrator
+
+--> Creating resources ...
+    imagestream.image.openshift.io "rhel7" created
+    imagestream.image.openshift.io "time" created
+    buildconfig.build.openshift.io "time" created
+    deploymentconfig.apps.openshift.io "time" created
+    service "time" created
+--> Success
+    Build scheduled, use 'oc logs -f bc/time' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose svc/time'
+    Run 'oc status' to view your app.
+....
+
+You’ll notice that OpenShift created a few things at this point. You
+will find a buildconfig, deploymentconfig, service and imagestreams in
+the above list. The application is not running yet. It needs to be built
+and deployed. Within a minute or so, you will see that OpenShift starts
+the build.
+
+*Step 3: Build*
+
+In the meanwhile lets have a look at the buildconfig by running the
+command shown below.
+
+....
+$ oc get bc time -o yaml
+
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: 2019-05-09T11:38:11Z
+  labels:
+    app: time
+  name: time
+  namespace: hco-mkerker
+  resourceVersion: "19982069"
+  selfLink: /apis/build.openshift.io/v1/namespaces/hco-mkerker/buildconfigs/time
+  uid: ec7808d0-724e-11e9-a85d-fa163e51c3a4
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: time:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: rhel
+    git:
+      uri: https://github.com/hcs-company/time
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: rhel7:latest
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secret: eHaqgaXwPSsYdBQ20TUr
+    type: GitHub
+  - generic:
+      secret: z2IaCG3L3x3cftl5gFqJ
+    type: Generic
+  - type: ConfigChange
+  - imageChange:
+      lastTriggeredImageID: registry.access.redhat.com/rhel7@sha256:a5202c981262481dffc11f7e2e69e7b19126965ceeb021cbe597e19babb14275
+    type: ImageChange
+status:
+  lastVersion: 1
+....
+
+Note the name of the buildconfig in metadata is set to `time`, the git
+uri pointing to the value you gave while creating the application. Also
+note the Strategy.type set to `Docker`. This indicates that the build
+will use the instructions in this Dockerfile to do the docker build.
+
+Build starts in a minute or so. You can view the list of builds using
+`oc get builds` command. You can also start the build using
+`oc start-build time` where ``time'' is the name we noticed in the
+buildconfig.
+
+....
+$ oc get builds
+
+NAME      TYPE      FROM          STATUS     STARTED         DURATION
+time-1    Docker    Git@a89545e   Complete   2 minutes ago   1m6s
+....
+
+Note the name of the build that is running i.e. time-1. We will use that
+name to look at the build logs. Run the command as shown below to look
+at the build logs. This will run for a few mins. At the end you will
+notice that the docker image is successfully created and it will start
+pushing this to OpenShift’s internal docker registry.
+
+....
+$ oc logs build/time-1
+
+<output ommited>
+Successfully built 63bc4834961e
+
+Pushing image docker-registry.default.svc:5000/hco-mkerker/time:latest ...
+Pushed 0/5 layers, 1% complete
+Pushed 1/5 layers, 21% complete
+Pushed 2/5 layers, 41% complete
+Pushed 3/5 layers, 63% complete
+Pushed 4/5 layers, 88% complete
+Pushed 5/5 layers, 100% complete
+Push successful
+....
+
+In the above log note how the image is pushed to the local docker
+registry. The registry is running at `docker-registry.default.svc` at port `5000`.
+
+*_Step 4: Deployment_*
+
+Once the image is pushed to the docker registry, OpenShift will trigger
+a deploy process. Let us also quickly look at the deployment
+configuration by running the following command. Note dc represents
+deploymentconfig.
+
+....
+$ oc get dc -o yaml
+
+apiVersion: v1
+items:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: 2019-05-09T07:25:55Z
+    generation: 2
+    labels:
+      app: time
+    name: time
+    namespace: hco-mkerker
+    resourceVersion: "19935562"
+    selfLink: /apis/apps.openshift.io/v1/namespaces/hco-mkerker/deploymentconfigs/time
+    uid: aebf1239-722b-11e9-a85d-fa163e51c3a4
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      app: time
+      deploymentconfig: time
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: time
+          deploymentconfig: time
+      spec:
+        containers:
+        - image: docker-registry.default.svc:5000/hco-mkerker/time@sha256:d5f747f694db064a790f40909009eb0b41a0b92aee2a398ecdecaae10a67ecce
+          imagePullPolicy: Always
+          name: time
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - time
+        from:
+          kind: ImageStreamTag
+          name: time:latest
+          namespace: hco-mkerker
+        lastTriggeredImage: docker-registry.default.svc:5000/hco-mkerker/time@sha256:d5f747f694db064a790f40909009eb0b41a0b92aee2a398ecdecaae10a67ecce
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: 2019-05-09T07:27:21Z
+      lastUpdateTime: 2019-05-09T07:27:21Z
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    - lastTransitionTime: 2019-05-09T07:27:06Z
+      lastUpdateTime: 2019-05-09T07:27:21Z
+      message: replication controller "time-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+....
+
+Note where the image is picked from. It shows that the deployment picks
+the image from the local registry (same ip address and port as in
+buildconfig) and the image tag is same as what we built earlier. This
+means the deployment step deploys the application image what was built
+earlier during the build step.
+
+If you get the list of pods, you’ll notice that the application gets
+deployed quickly and starts running in its own pod.
+
+....
+$ oc get pods
+
+NAME           READY     STATUS      RESTARTS   AGE
+time-1-8vbn9   1/1       Running     0          5m
+time-1-build   0/1       Completed   0          6m
+....
+
+*Step 5: Adding route*
+
+This step is very much the same as what we did in the previous exercise.
+We will check the service and add a route to expose that service.
+
+....
+$ oc get services
+
+NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+time      ClusterIP   172.30.124.24   <none>        8080/TCP,8443/TCP   7m
+....
+
+Here we expose the service as a route.
+
+....
+$ oc expose service time
+
+route.route.openshift.io/time exposed
+....
+
+And then we check the route exposed.
+
+....
+$ oc get routes
+
+NAME      HOST/PORT                                      PATH      SERVICES   PORT       TERMINATION   WILDCARD
+time      time-hco-UserName.playground.hotcontainers.nl            time       8080-tcp                 None
+....
+
+*Note:* Unlike in the previous lab, this time we did not use `--hostname`
+parameter while exposing the service to create a route. OpenShift
+automatically assigned the project name extension to the route name.
+
+*Step 6: Run the application*
+
+Now run the application by using the route you provided in the previous
+step. You can use either curl or your browser. The application displays
+time. *If you don’t provide time.php extension, it displays apache’s
+default index page.*
+
+....
+$ curl time-hco-UserName.playground.hotcontainers.nl 
+Thu May  9 11:41:08 UTC 2019
+....
+
+Congratulations!! In this exercise you have learnt how to create, build
+and deploy an application using OpenShift’s `Docker Build strategy`.
