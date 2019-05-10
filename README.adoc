@@ -4,5 +4,6 @@ $ oc new-app quay.io/osevg/workshopper:latest --name=ocptab-workshop \
     -e CONTENT_URL_PREFIX=https://raw.githubusercontent.com/hcs-company/openshift-tab-workshop/master \
     -e WORKSHOPS_URLS=https://raw.githubusercontent.com/hcs-company/openshift-tab-workshop/master/_ocptab-workshop.yml \
     -e LOG_TO_STDOUT=true
+    -e RELOAD=yes
 $ oc expose svc/ocptab-workshop
 ```
