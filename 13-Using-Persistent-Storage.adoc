@@ -60,7 +60,7 @@ openshift-php-upload-demo-1-bxlxp   1/1       Running     0          2m
 
 $ oc rsh openshift-php-upload-demo-1-bxlxp
 sh-4.2$ ls -1 /opt/app-root/src/uploaded
-shadowman.png
+hcs_company_logo.png
 sh-4.2$ exit
 ....
 
@@ -205,7 +205,7 @@ openshift-php-upload-demo-8-4brh0   1/1       Running     0          58s
 
 $ oc rsh openshift-php-upload-demo-8-4brh0
 sh-4.2$ ls -1 /opt/app-root/src/uploaded/
-shadowman.png
+hcs_company_logo.png
 ....
 
 Summary

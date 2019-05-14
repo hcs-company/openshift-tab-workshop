@@ -265,3 +265,9 @@ image::scale_down.jpg[image] twice to remove 2 running pods.
 
 Congratulations!! In this exercise you have learned about scaling and
 how to scale up/down your application on OpenShift!
+
+Clean up the contents of your project to have a clean environment for the next lab:
+
+....
+oc delete all --all
+....

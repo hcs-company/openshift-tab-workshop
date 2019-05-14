@@ -7,17 +7,19 @@ PHP application that accesses this database using the service exposed by
 the database. We will provide a route (a URL) to access the frontend
 application from a browser.
 
-*Step 1: Create a Project*
+*Step 1:* Clean up the project that you created in the last lab.
 
-Based on the experience gained from the previous exercise, log into the
-OpenShift Web Console. You will see the list of Projects.
+Ensure you are in the right project by running `oc project` command. If
+not, change your project by running `oc project spring-UserName`,
+*replacing* the UserName with your own userid.
 
-Using the *Create Project* button, create a new project. We will call it
-*consoleproject-UserName*. Replace by your username to make this project
-unique. Type in a *Display Name* and *Description* of your choice.
+Clean up the contents of this project:
 
-Press the *Create* button to complete the project creation from the Web
-Console. This will accomplish the same job as `oc new-project` from CLI.
+....
+oc delete all --all
+....
+
+Verify that all the contents are gone by running `oc get all`
 
 *Step 2: Create a MYSQL database using the template*
 
@@ -38,7 +40,7 @@ You will be taken to the mysql ephemeral creation screen. Click *Next*
 parameters and edit the values to use the following values:
 
 ....
-Add to Project: consoleproject-UserName
+Namespace: hco-UserName
 Database Service Name: mysql
 MySQL Connection Username: pricelist
 MySQL Connection Password: pricelist
@@ -76,10 +78,10 @@ Run the following on the command line:
 In this step we will add a PHP frontend application that talks to
 recently created database. The code is available on github at
 
-https://github.com/RedHatWorkshops/php-pricelist
+https://github.com/hcs-company/php-pricelist
 
 Browse through the code in this repository. If you take a look at the
-link:https://raw.githubusercontent.com/RedHatWorkshops/php-pricelist/master/config/database.php[database configuration] file (`config/database.php`) you will see that
+link:https://raw.githubusercontent.com/hcs-company/php-pricelist/master/config/database.php[database configuration] file (`config/database.php`) you will see that
 it reads the values from environment varables.
 
 To add a frontend again click on *Add to Project -> Browse Catalog*
@@ -89,9 +91,9 @@ Select Languages -> PHP -> PHP
 Click *Next*
 
 ****
-Add to Project: consoleproject-UserName (this should be the same project as MySQL Ephemeral)
+Add to Project: hco-UserName (this should be the same project as MySQL Ephemeral)
 Application Name: pricelist
-Git Repository: https://github.com/RedHatWorkshops/php-pricelist
+Git Repository: https://github.com/hcs-company/php-pricelist
 
 image::php.png[image]
 

@@ -10,7 +10,7 @@ how to create an application from an existing docker image.
 the commands below.
 
 ....
-$ oc oc login https://playground.hotcontainers.nl:8443 -u UserName -p Password
+$ oc login https://playground.hotcontainers.nl:8443 -u UserName -p Password
 ....
 
 Upon project creation, OpenShift will automatically switch to the newly
@@ -140,7 +140,7 @@ $ oc get routes
 NAME      HOST/PORT                                         PATH      SERVICES   PORT       TERMINATION   WILDCARD
 welcome   welcome-hco-UserName.playground.hotcontainers.nl            welcome    8080-tcp                 None
 
-$ curl -Is <route>
+$ curl -Is welcome-hco-UserName.playground.hotcontainers.nl
 ....
 
 Voila!! you created your first application using an existing docker
