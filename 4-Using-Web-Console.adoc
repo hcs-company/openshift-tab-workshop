@@ -22,7 +22,7 @@ image::service_catalog.png[image]
 
 Click on "View All" on the right. You will only see your own projects now.
 
-image::projects_list.png[image]
+image::project_list.png[image]
 
 Also note the *Create Project* button which allows you to create a new
 project from Web Console.
