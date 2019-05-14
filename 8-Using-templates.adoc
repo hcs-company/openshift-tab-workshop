@@ -69,9 +69,11 @@ Please wait for the Bindings to complete. It may take few minutes.
 
 While we are waiting we can add a lable to the mysql deployment
 Run the following on the command line:
-****
- oc label dc mysql app=pricelist
-****
+....
+ $ oc label dc mysql app=pricelist
+
+ deploymentconfig.apps.openshift.io/mysql labeled
+....
 
 *Step 3: Add a PHP frontend to talk to this database*
 
@@ -131,19 +133,20 @@ You can check the build logs using the following command:
 
 ....
 $ oc logs build/pricelist-1
-Cloning "https://github.com/RedHatWorkshops/php-pricelist" ...
-	Commit:	2aa50442e8432c48beedc1503cd3d05dcb834515 (Added db connection)
-	Author:	Christian Hernandez <christian.hernandez@yahoo.com>
-	Date:	Thu Jun 29 10:52:43 2017 -0700
+Cloning "https://github.com/hcs-company/php-pricelist" ...
+	Commit:	8feb14ade2ae18da000f93faedd5da1818f39814 (Update README.md)
+	Author:	Christian Hernandez <christianh814@users.noreply.github.com>
+	Date:	Wed Apr 10 15:52:07 2019 -0700
 ---> Installing application source...
-Pushing image docker-registry.default.svc:5000/consoleproject-christian/pricelist:latest ...
-Pushed 0/6 layers, 2% complete
-Pushed 1/6 layers, 26% complete
-Pushed 2/6 layers, 42% complete
-Pushed 3/6 layers, 56% complete
-Pushed 4/6 layers, 75% complete
-Pushed 5/6 layers, 97% complete
-Pushed 6/6 layers, 100% complete
+=> sourcing 20-copy-config.sh ...
+---> 21:12:09     Processing additional arbitrary httpd configuration provided by s2i ...
+=> sourcing 00-documentroot.conf ...
+=> sourcing 50-mpm-tuning.conf ...
+=> sourcing 40-ssl-certs.sh ...
+
+Pushing image docker-registry.default.svc:5000/hco-mkerker/pricelist:latest ...
+Pushed 0/6 layers, 14% complete
+Pushed 1/6 layers, 17% complete
 Push successful
 ....
 
@@ -155,7 +158,7 @@ console.
 Now use `curl` to run the database `bootstrap` script
 ....
 $ oc project
-Using project "consoleproject-Username" on server "{{CONSOLE_ADDRESS}}".
+Using project "hco-Username" on server "{{CONSOLE_ADDRESS}}".
 
 $ curl -k http://$(oc get route/pricelist -o jsonpath='{.spec.host}')/create_database.php
 Array

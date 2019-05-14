@@ -1,23 +1,21 @@
 modules:
-  0-Setting-up-client-tools:
+  1-Setting-up-client-tools:
     name: Setting up client tools
-  1-Create-App-From-a-Docker-Image:
+  2-Create-App-From-a-Docker-Image:
     name: Creating an application from an existing Docker Image using CLI
-  2-Create-App-Using-Docker-Build:
+  3-Create-App-Using-Docker-Build:
     name: Create an application using Docker Build Strategy using CLI
-  3-Using-Web-Console:
+  4-Using-Web-Console:
     name: Using Web Console
-  4-Creating-an-application-using-JBoss-EAP-builder-image:
-    name: Creating an application using JBoss EAP builder image
-  5-Using-templates:
-    name: Creating an application with frontend and backend database using templates
-  6-Scale-up-and-Scale-down-the-application-instances:
+  5-Scale-up-and-Scale-down-the-application-instances:
     name: Scale Up Scale Down and Idle the application instances
-  7-Binary-Deployment-of-a-war-file:
-    name: Binary deployment of a war file
-  8-Using-SSL-In-your-Application:
+  6-Creating-an-application-using-JBoss-EAP-builder-image:
+    name: Creating an application using JBoss EAP builder image
+  7-Using-SSL-In-your-Application:
     name: Using SSL In your Application
-  9-Blue-Green-Deployments: 
+  8-Using-templates:
+    name: Creating an application with frontend and backend database using templates
+  9-Blue-Green-Deployments:
     name: Blue-Green Deployments
   10-SCM-Web-Hooks:
     name: SCM - Web Hooks
@@ -39,3 +37,6 @@ modules:
     name: Changing code on the fly
   19-Creating-a-Pipeline:
     name: Creating a CI/CD Pipeline
+
+  #    ?-Binary-Deployment-of-a-war-file:
+  #      name: Binary deployment of a war file

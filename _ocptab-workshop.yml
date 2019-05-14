@@ -3,15 +3,14 @@ name: "Technisch Applicatie Beheer Workshop with OpenShift by HCS Company"
 
 modules:
   activate:
-    - 0-Setting-up-client-tools
-    - 1-Create-App-From-a-Docker-Image
-    - 2-Create-App-Using-Docker-Build
-    - 3-Using-Web-Console
-    - 4-Creating-an-application-using-JBoss-EAP-builder-image
-    - 5-Using-templates
-    - 6-Scale-up-and-Scale-down-the-application-instances
-    - 7-Binary-Deployment-of-a-war-file
-    - 8-Using-SSL-In-your-Application
+    - 1-Setting-up-client-tools
+    - 2-Create-App-From-a-Docker-Image
+    - 3-Create-App-Using-Docker-Build
+    - 4-Using-Web-Console
+    - 5-Scale-up-and-Scale-down-the-application-instances
+    - 6-Creating-an-application-using-JBoss-EAP-builder-image
+    - 7-Using-SSL-In-your-Application
+    - 8-Using-templates
     - 9-Blue-Green-Deployments
     - 10-SCM-Web-Hooks
     - 11-Rollback-Applications
@@ -23,3 +22,4 @@ modules:
     - 17-Dynamic-Configuration-Updates-using-ConfigMap
     - 18-Changing-code-on-the-fly
     - 19-Creating-a-Pipeline
+    # ?-Binary-Deployment-of-a-war-file
