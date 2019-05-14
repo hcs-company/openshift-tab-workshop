@@ -6,7 +6,7 @@ how to create an application from an existing docker image.
 
 *Step 1: Login with CLI to OpenShift*
 
-*Note:* Please replace *UserName* and *Password* with the username/password assigned to you in
+CAUTION: Please replace *UserName* and *Password* with the username/password assigned to you in
 the commands below.
 
 ....
