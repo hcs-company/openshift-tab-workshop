@@ -23,6 +23,8 @@ Red Hat Customer Portal via the following methods:
 * Upstream Origin Binary: https://github.com/openshift/origin/releases
 * Past releases: https://mirror.openshift.com/pub/openshift-v3/clients
 
+## https://github.com/openshift/origin/releases/tag/v3.9.0
+
 *Installing the CLI tools*
 
 The CLI is provided as compressed files that can be decompressed to any

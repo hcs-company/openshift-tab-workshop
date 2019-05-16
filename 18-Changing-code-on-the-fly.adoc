@@ -8,8 +8,8 @@ machine and immediately sync it with the code running in a pod.
 
 *Prerequisite:* This lab assumes that you have git CLI installed on your laptop.
 
-*Step 1: Clone the git repository locally* Clone the following git
-repository to your workstation.
+*Step 1: Clone the git repository locally*
+Clone the following git repository to your workstation.
 https://github.com/hcs-company/nodejs-hello using the command
 
 ....
