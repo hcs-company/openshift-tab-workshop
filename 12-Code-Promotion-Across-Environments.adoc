@@ -50,6 +50,9 @@ oc project development-UserName
 oc new-app openshift/php~https://github.com/RedHatWorkshops/welcome-php
 ....
 
+oc new-app -f https://raw.githubusercontent.com/hcs-company/openshift-tab-workshop/master/jenkinks/application-template.json
+
+
 *Step 4: Tag the docker image*
 
 Wait until the application gets built and deployed. Now if you check the
@@ -63,7 +66,14 @@ $ oc get is
 
 NAME          DOCKER REPO                                                TAGS      UPDATED
 welcome-php   docker-registry.default.svc:5000/hco-UserName/welcome-php   latest    54 seconds ago
+
+NAME                    DOCKER REPO                                                          TAGS      UPDATED
+nodejs-010-centos7      openshift/nodejs-010-centos7                                         latest    About an hour ago
+origin-nodejs-sample    docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample    latest    About an hour ago
+origin-nodejs-sample2   docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample2
+origin-nodejs-sample3   docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample3
 ....
+
 
 Now describe this image stream to get the full image id:
 
@@ -85,12 +95,33 @@ latest
 
   * docker-registry.default.svc:5000/hco-mkerker/welcome-php@sha256:f8409b906e77e79ac4da1876d9e2e802c9f30d6518b780885becc8e7bcb62934
       About a minute ago
+
+			oc describe is origin-nodejs-sample
+			Name:			origin-nodejs-sample
+			Namespace:		hco-mkerker
+			Created:		About an hour ago
+			Labels:			app=nodejs-helloworld-sample
+						template=application-template-stibuild
+			Annotations:		openshift.io/generated-by=OpenShiftNewApp
+			Docker Pull Spec:	docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample
+			Image Lookup:		local=false
+			Unique Images:		1
+			Tags:			1
+
+			latest
+			  no spec tag
+
+			  * docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample@sha256:557c0a00e47e00d698c10cdae7c0db7c559136411e9f3f513e06e3982cafa82e
+			      About an hour ago
+
 ....
 
 In this case, the full image Id is
 
 ....
 docker-registry.default.svc:5000/hco-mkerker/welcome-php@sha256:f8409b906e77e79ac4da1876d9e2e802c9f30d6518b780885becc8e7bcb62934
+
+docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample@sha256:557c0a00e47e00d698c10cdae7c0db7c559136411e9f3f513e06e3982cafa82e
 
 ....
 
@@ -111,6 +142,9 @@ docker-registry.default.svc:5000/hco-mkerker/welcome-php@sha256:f8409b906e77e79a
 development-UserName/welcome-php:promote-test
 
 Tag welcome-php:promote-test set to docker-registry.default.svc:5000/development-UserName/welcome-php@sha256:157334d73dfc8dfdf733257b05c3fecaee236d36f69afa207395715fbe882abf.
+
+oc tag docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample@sha256:557c0a00e47e00d698c10cdae7c0db7c559136411e9f3f513e06e3982cafa82e hco-mkerker/origin-nodejs-sample:prod
+Tag origin-nodejs-sample:prod set to docker-registry.default.svc:5000/hco-mkerker/origin-nodejs-sample@sha256:557c0a00e47e00d698c10cdae7c0db7c559136411e9f3f513e06e3982cafa82e.
 
 
 $ oc describe is welcome-php
