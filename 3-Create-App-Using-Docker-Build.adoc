@@ -5,18 +5,7 @@ In this exercise we will learn how to create an application from a
 Dockerfile. OpenShift takes Dockerfile as an input and generates your
 application docker image for you.
 
-*Step 1: Create a project or use an existing project*
-
-If you want to, you can create a new project based on what you have
-learned in the previous lab. Since we already have a project we will use
-it. Run the following command to make sure. *Remember* to substitute
-UserName with your username.
-
-....
-$ oc project hco-UserName
-....
-
-*Step 2: Create an application that uses docker file*
+*Step 1: Create an application that uses docker file*
 
 This time we will use a project that has a Dockerfile in a source code
 repository. We will use a simple project on github
@@ -80,7 +69,7 @@ the above list. The application is not running yet. It needs to be built
 and deployed. Within a minute or so, you will see that OpenShift starts
 the build.
 
-*Step 3: Build*
+*Step 2: Build*
 
 In the meanwhile lets have a look at the buildconfig by running the
 command shown below.
@@ -180,7 +169,7 @@ Push successful
 In the above log note how the image is pushed to the local docker
 registry. The registry is running at `docker-registry.default.svc` at port `5000`.
 
-*_Step 4: Deployment_*
+*Step 3:* Deployment
 
 Once the image is pushed to the docker registry, OpenShift will trigger
 a deploy process. Let us also quickly look at the deployment
@@ -308,7 +297,7 @@ time-1-8vbn9   1/1       Running     0          5m
 time-1-build   0/1       Completed   0          6m
 ....
 
-*Step 5: Adding route*
+*Step 4: Adding route*
 
 This step is very much the same as what we did in the previous exercise.
 We will check the service and add a route to expose that service.
@@ -349,7 +338,7 @@ time. *If you don’t provide time.php extension, it displays apache’s
 default index page.*
 
 ....
-$ curl time-hco-UserName.playground.hotcontainers.nl 
+$ curl time-hco-UserName.playground.hotcontainers.nl
 Thu May  9 11:41:08 UTC 2019
 ....
 

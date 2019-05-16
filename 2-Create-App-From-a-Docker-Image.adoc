@@ -119,10 +119,6 @@ Now add a route to the service with the following command. `oc expose`
 command will allow you to expose your service to the world so that you
 can access it from the browser.
 
-*Note*: In this example, I am using a domain name of
-`apps.workshop.osecloud.com`. *Ask the instructor for the domain name suffix* for
-your setup an change it.
-
 ....
 $ oc expose service welcome --name=welcome
 
@@ -146,7 +142,7 @@ $ curl -Is welcome-hco-UserName.playground.hotcontainers.nl
 Voila!! you created your first application using an existing docker
 image on OpenShift.
 
-*Step 4: Clean up*
+*Step 5: Clean up*
 
 Run the `oc get all` command to view all the components that were
 created in your project.

@@ -8,7 +8,7 @@ instances are always running.
 *Step 1: Switch to an existing project*
 
 For this exercise, we will be using an already running application. We
-will be using the `mhco-UserName` that you created in the
+will be using the `time` application that you created in the
 previous labs. Make sure you are switched to that project by using the
 `oc project` command and *remember* to substitute UserName.
 
@@ -144,7 +144,7 @@ NAME      DESIRED   CURRENT   AGE
 time-1    1         1         2h
 ....
 
-*Note:* You can change the number of replicas in `DeploymentConfig` or
+CAUTION: You can change the number of replicas in `DeploymentConfig` or
 the `ReplicationController`.
 
 However note that if you change the `deploymentConfig` it applies to
