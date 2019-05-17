@@ -1,5 +1,5 @@
 Creating a CI/CD Pipeline
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this lab, we will learn to create a build pipeline on OpenShift. This
 pipeline will be setup using Jenkins running as an application pod on
@@ -52,7 +52,7 @@ $ oc new-app jenkins-ephemeral
 
 *Step 2: Create a sample application configuration*
 
-> Use the "oc new-app" command to create a simple nodejs application from a template file:
+Use the "oc new-app" command to create a simple nodejs application from a template file:
 
 ....
 $ oc new-app -f https://raw.githubusercontent.com/hcs-company/openshift-tab-workshop/master/jenkinks/application-template.json
@@ -86,7 +86,7 @@ $ oc new-app -f https://raw.githubusercontent.com/hcs-company/openshift-tab-work
     Run 'oc status' to view your app.
 ....
 
-> Click on "Overview" within the OpenShift console to display the sample application configuration
+Click on "Overview" within the OpenShift console to display the sample application configuration
 
 image::ocp-lab-cicd-app-create.png[image]
 
