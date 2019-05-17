@@ -1,4 +1,4 @@
-Creating a Pipeline
+Creating a CI/CD Pipeline
 ~~~~~~~~~~~~~~~~~~~
 
 In this lab, we will learn to create a build pipeline on OpenShift. This
@@ -6,8 +6,6 @@ pipeline will be setup using Jenkins running as an application pod on
 OpenShift. The pipeline running on Jenkins will trigger builds and
 deployments on OpenShift.
 
-CI/CD
-~~~~~
 In modern software projects many teams utilize the concept of Continuous Integration (CI) and Continuous Delivery (CD). By setting up a tool chain that continuously builds, tests, and stages software releases, a team can ensure that their product can be reliably released at any time. OpenShift can be an enabler in the creation and management of this tool chain.
 In this lab we walk through creating a simple example of a CI/CD [pipeline][1] utlizing Jenkins, all running on top of OpenShift! The Jenkins job will trigger OpenShift to build and deploy a test version of the application, validate that the deployment works, and then tag the test version into production.
 In this lab, we will learn to create a build pipeline on OpenShift. This
@@ -17,7 +15,7 @@ deployments on OpenShift.
 
 *Step 1: Instantiate a Jenkins server in your project*
 
-CATION: Be sure you use version 3.9 of the OpenShift-CLI; by using command `oc version`.
+CAUTION: Be sure you use version 3.9 of the OpenShift-CLI; by using command `oc version`.
 ....
 $ oc new-app jenkins-ephemeral
 
@@ -106,13 +104,13 @@ Use Jenkins HOST/PORT to access through web browser
 
 image::ocp-lab-cicd-jenkins-overview.png[image]
 
-> Select "Login with OpenShift" from Jenkins login page
+Select "Login with OpenShift" from Jenkins login page
 
 image::ocp-lab-cicd-jenkins-login-1.png[image]
 
 The OpenShift login page is displayed in a new browser tab.
 
-> Login with your OpenShift user name and password
+Login with your OpenShift user name and password
 
 Once logged in, click the [Allow selected permissions] button and you should see the Jenkins dashboard.
 
@@ -137,46 +135,45 @@ buildconfig "pipeline" created
 buildconfig.build.openshift.io/pipeline created
 ....
 
-> Use the following OpenShift build configuration to create the pipeline.
+Use the following OpenShift build configuration to create the pipeline.
 
 
 
 *Step 5: Start the pipeline*
+Using the OpenShift Web Console, choose *Builds* -> *Pipelines*
 
-> Using the OpenShift Web Console, choose *Builds* -> *Pipelines*
-
-<img src="../images/ocp-lab-cicd-start-pipeline.png" width="900">
+image::ocp-lab-cicd-start-pipeline.png[image]
 
 When the pipeline starts, OpenShift uploads the pipeline to the Jenkins server for execution. As it runs, the various stages trigger OpenShift to build and deploy the frontend microservice. After a Jenkins user approves the frontend deployment, Jenkins triggers OpenShift to tag the image stream with the ":prod" tag then scales the frontend-prod deployment for (2) replicas.
 
 The Jenkins dashboard should indicate that a new build is executing.
 
-<img src="../images/ocp-lab-cicd-jenkins-build-exec-status.png">
+image::ocp-lab-cicd-jenkins-build-exec-status.png[image]
 
 Back in the OpenShift Web Console, watch the pipeline execute. Once the "deployFrontEnd" stage completes, you should be able to visit the route for the frontend service in a web browser.
 
-<img src="../images/ocp-lab-cicd-pipeline-input.png">
+image::ocp-lab-cicd-pipeline-input.png[image]
 
-> Click on "Input Required" and you should get redirected to the Jenkins Web Console to
+Click on "Input Required" and you should get redirected to the Jenkins Web Console to
 approve the promotion to production.
 
-<img src="../images/ocp-lab-cicd-jenkins-promote.png">
+image::ocp-lab-cicd-jenkins-promote.png[image]
 
-> Now return to the OpenShift Web Console and watch the pipeline finish.
+Now return to the OpenShift Web Console and watch the pipeline finish.
 
-<img src="../images/ocp-lab-cicd-pipeline-stages.png">
+image::ocp-lab-cicd-pipeline-stages.png[image]
 
-> Confirm the *frontend-prod* has deployed 2 pods.
+Confirm the *frontend-prod* has deployed 2 pods.
 
-<img src="../images/ocp-lab-cicd-create-route.png">
+image::ocp-lab-cicd-create-route.png[image]
 
-> Now *create a secure route* with TLS edge termination the *frontend-prod* service so the application can be visited.
+Now *create a secure route* with TLS edge termination the *frontend-prod* service so the application can be visited.
 
-<img src="../images/ocp-lab-cicd-route-tls.png">
+image::ocp-lab-cicd-route-tls.png[image]
 
 *Step 6: Confirm both the test and production services are available*
 
-> Browse to both services
+Browse to both services
 
 
 Use the `oc get routes` command to get the HOST/PORT (URLs) needed to access the frontend and frontend-prod services. Your HOST/PORT values will differ
@@ -197,15 +194,15 @@ Use a web browser to visit the HOST/PORT (URLs) for the frontend and frontend-pr
 Select services' links from Overview page.
 
 
-<img src="../images/ocp-lab-cicd-jenkins-app-overview.png"><br/>
+image::ocp-lab-cicd-jenkins-app-overview.png[image]
 
 Service web page displayed:
 
-<img src="../images/ocp-lab-cicd-app-test.png"><br/>
+image::ocp-lab-cicd-app-test.png[image]
 
 *Step 7: Edit the pipeline*
 
-> Now make a change to the pipeline. For example, in the *scaleUp* stage, change the number
+Now make a change to the pipeline. For example, in the *scaleUp* stage, change the number
 of replicas to 3.
 
 Technically speaking, a rebuild from source is not needed to scale up a deployment. We use
@@ -219,19 +216,24 @@ $ oc edit bc/pipeline
 ....
 
 
-<img src="../images/ocp-lab-cicd-pipeline-edit.png">
+image::ocp-lab-cicd-pipeline-edit.png[image]
 
 
 
-> Save your changes and run the pipeline again to confirm the *frontend-prod* deployment has
+Save your changes and run the pipeline again to confirm the *frontend-prod* deployment has
 deployed 3 pods.
 
-<img src="../images/ocp-lab-cicd-app-3-pods.png">
+image::ocp-lab-cicd-app-3-pods.pn[image]
 
-# Summary
+Summary
+~~~~~~~
+
 In this lab you have very quickly and easily constructed a basic Build/Test/Deploy pipeline. Although our example was very basic it introduces you to a powerful DevOps feature of OpenShift through the leveraging of Jenkins. This can be extended to support complex real-world continuous delivery requirements. Read more about the use of Jenkins on OpenShift [here][3] and more about Jenkins [here][4].
 
 [1]: https://jenkins.io/doc/book/pipeline/
+
 [2]: https://github.com/openshift/jenkins-plugin
-[3]: https://docs.openshift.com/enterprise/latest/using_images/other_images/jenkins.html
+
+[3]: https://docs.openshift.com/enterprise/latest/using_image::other_image::jenkins.html
+
 [4]: https://jenkins.io/doc
