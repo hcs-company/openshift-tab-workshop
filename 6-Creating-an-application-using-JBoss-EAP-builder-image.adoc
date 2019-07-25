@@ -15,7 +15,7 @@ $ oc project hco-UserName
 *Step 2: Create an application that uses the JBoss EAP builder image*
 
 We will be using a sample application called `Kitchensink` (found
-https://github.com/RedHatWorkshops/kitchensink[here]). Taking that
+hhttps://github.com/hcs-company/kitchensink [here]). Taking that
 source-code; we will use the JBoss ImageStream (or the builder image) to
 assemble our application.
 
@@ -42,8 +42,8 @@ Context Directory: /
 ....
 
 
-image::jboss_wizard_configuration.png[image]
-image::jboss_wizard_configuration2.png[image]
+image::Xjboss_wizard_configuration.png[image]
+image::Xjboss_wizard_configuration2.png[image]
 
 Click Next
 Select `Create a secret in ... to be used later`
@@ -343,7 +343,7 @@ $ curl ks-hco-mkerker.playground.hotcontainers.nl
 Go to http://ks-hco-mkerker.playground.hotcontainers.nl via your browser.
 Please replace your username with yours.
 
-image::ks-myjbossapp.png[image]
+image::Xks-myjbossapp.png[image]
 
 Congratulations! In this exercise you have learned how to create, build
 and deploy a JBoss EAP application using OpenShift’s JBoss EAP Builder

@@ -14,6 +14,9 @@ In Part I of the Lab we will:
 * Deploy an application using a source to image strategy.
 * Create a route to expose the newly deployed application.
 
+CAUTION: If you don't have a github account, create one, otherwise skip this step.
+Go to https://github.com and press *Sign up* in the right corner and follow the sign up steps.
+
 *Step 1: Create new application*
 
 * We will use the forked repository from the previous lab.
