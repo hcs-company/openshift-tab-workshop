@@ -1,5 +1,5 @@
 modules:
-  1-Users-and-passwords:
+  0-Users-and-passwords:
     name: Users and passwords
   1-Setting-up-client-tools:
     name: Setting up client tools
