@@ -3,7 +3,7 @@ name: "Technisch Applicatie Beheer Workshop with OpenShift by HCS Company"
 
 modules:
   activate:
-    - 0-Users-and-passwords
+    #- 0-Users-and-passwords
     - 1-Setting-up-client-tools
     - 2-Create-App-From-a-Docker-Image
     - 3-Create-App-Using-Docker-Build
