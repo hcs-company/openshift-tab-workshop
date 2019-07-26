@@ -21,7 +21,7 @@ Go to https://github.com and press *Sign up* in the right corner and follow the 
 
 * We will use the forked repository from the previous lab.
 
-*Remember* to substitute the UserName.
+Go first to https://github.com/hcs-company/bluegreen and fork this repro, by pressing the *Fork* button in the right corner and sign in, if you not already sign in GitHub.
 
 ....
 $ oc new-app --image-stream=php --code=https://github.com/your_github_username/bluegreen.git --name=scm-web-hooks
